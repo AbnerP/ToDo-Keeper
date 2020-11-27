@@ -1,5 +1,4 @@
 # Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
-
 from flask import Flask, render_template, url_for, redirect 
 from flask_bootstrap import Bootstrap
 from forms import LoginForm, RegisterForm
