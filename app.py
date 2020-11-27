@@ -37,7 +37,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
-            if user.password == form.password.data:
+            if check_password_hash(user.password,form.password.data):
                 return render_template('dashboard.html',name=user.username)
         
         return '<h1>Invalid username or password</h1>'
@@ -49,7 +49,9 @@ def signup():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        newUser = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        hashPass = generate_password_hash(form.password.data, method='sha256')
+        newUser = User(username=form.username.data, email=form.email.data, password=hashPass)
+        
         db.session.add(newUser)
         db.session.commit()
         
