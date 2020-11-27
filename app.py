@@ -31,11 +31,6 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
 def load_user(user_id):
     return User.query.get(int(user_id)) 
 
-
-
-
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -48,6 +43,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if check_password_hash(user.password,form.password.data):
+                login_user(user, remember=form.remember.data) #Allow user to access dashboard once logged in
                 return render_template('dashboard.html',name=user.username)
         
         return '<h1>Invalid username or password</h1>'
@@ -72,7 +68,13 @@ def signup():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html',name=current_user.username)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
