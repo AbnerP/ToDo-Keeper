@@ -4,5 +4,6 @@
 
 3. Start modeling the Database to create a relationship between task table and user table
 
-4.Work with routes to better improve
+4. Work with routes to better improve
 
+5. Remember Me not working

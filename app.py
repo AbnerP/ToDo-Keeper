@@ -1,5 +1,5 @@
 # Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
-from flask import Flask, render_template, url_for, redirect 
+ntfrom flask import Flask, render_template, url_for, redirect, session
 from flask_bootstrap import Bootstrap
 from forms import LoginForm, RegisterForm
 from flask_sqlalchemy  import SQLAlchemy
@@ -27,9 +27,13 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
 
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(150))
+
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id)) 
+        return User.query.get(int(user_id)) 
 
 @app.route('/')
 def index():
@@ -60,8 +64,10 @@ def signup():
         
         db.session.add(newUser)
         db.session.commit()
+        login_user(newUser,remember=form.remember.data)
         
-        return '<h1> Hello '+form.username.data+'!</h1>'
+        return redirect(url_for('dashboard'))
+        #return '<h1> Hello '+form.username.data+'!</h1>'
 
     return render_template('signup.html', form=form)
 
