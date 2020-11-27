@@ -14,7 +14,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ingredients.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 bootstrap = Bootstrap(app)
@@ -25,16 +25,12 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 #Database Model
-class User(UserMixin, db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 @app.route('/')
 def index():
@@ -58,16 +54,6 @@ def signup():
 
     return render_template('signup.html', form=form)
 
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    return render_template('dashboard.html', name=current_user.username)
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
