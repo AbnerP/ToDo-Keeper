@@ -41,7 +41,6 @@ def login():
                 return render_template('dashboard.html',name=user.username)
         
         return '<h1>Invalid username or password</h1>'
-        #return '<h1>'+form.username.data+' '+form.password.data+'</h1>'
     
     return render_template('login.html',form=form)
 
@@ -55,7 +54,6 @@ def signup():
         db.session.commit()
         
         return '<h1> Hello '+form.username.data+'!</h1>'
-        #return '<h1>'+form.username.data+' '+form.password.data+' '+form.email.data+'</h1>'
 
     return render_template('signup.html', form=form)
 
