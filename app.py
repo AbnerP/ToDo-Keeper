@@ -1,6 +1,6 @@
 # Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, url_for, redirect 
 from flask_bootstrap import Bootstrap
 from forms import LoginForm, RegisterForm
 from flask_sqlalchemy  import SQLAlchemy
@@ -35,7 +35,13 @@ def login():
     form = LoginForm()
     
     if form.validate_on_submit():
-        return '<h1>'+form.username.data+' '+form.password.data+'</h1>'
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if user.password == form.password.data:
+                return render_template('dashboard.html',name=user.username)
+        
+        return '<h1>Invalid username or password</h1>'
+        #return '<h1>'+form.username.data+' '+form.password.data+'</h1>'
     
     return render_template('login.html',form=form)
 
