@@ -12,9 +12,13 @@
 
     //FINISHED(3b)Confirm Password) 
 
-4. Log in issues
+4. Message Flashing
 
     4a)Work with bootstrap flash to flash 'Invalid username or password' when required
+
+    4b) Flash 'Account succesfully created for {{ user }} when sign up or log In
+
+    supplemental video url = 'https://www.youtube.com/watch?v=qbnqNWXf_tU&ab_channel=TechWithTim'
 
 5. Filesystem Restructure
 
