@@ -51,13 +51,18 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     password = db.Column(db.String(80),nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     
+    tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) #lazy means sqlalchemy will load the data from the database automatically
+    
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}',)"
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(150),nullable=False)
-    date_poster = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f"Task('{self.text}', '{self.date_posted}')"
     
 @login_manager.user_loader
 def load_user(user_id):
@@ -81,6 +86,7 @@ def login():
         if user:
             if check_password_hash(user.password,form.password.data):
                 login_user(user, remember=form.remember.data) #Allow user to access dashboard once logged in
+                print("LOG IN -'"+str(current_user.username+"'"))
                 return redirect(url_for('dashboard',name=user.username))
                 #return render_template('dashboard.html',name=user.username)
         flash('Invalid username or password','danger')
@@ -99,6 +105,8 @@ def signup():
         db.session.add(newUser)
         db.session.commit()
         login_user(newUser,remember=form.remember.data)
+        
+        print("NEW USER -'"+str(current_user.username+"'"))
         
         flash(f'Account created for {form.username.data}!','success')
         return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username))
@@ -128,6 +136,7 @@ def settings():
 @login_required
 def logout():
     form = LoginForm()
+    print("LOG OUT  -'"+str(current_user.username+"'"))
     logout_user()
     return redirect(url_for('login'))
 
