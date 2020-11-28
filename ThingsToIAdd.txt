@@ -1,6 +1,6 @@
 1. Database Model 
     
-    1a)Relation between tables
+    1a)One to many Relationship (User model to many Task model)
 
     1b)Due Date of Post
 
@@ -12,7 +12,9 @@
 
     //FINISHED(3b)Confirm Password) 
 
-4. Be able to log in with email OR username 
+4. Log in issues
+
+    4a)Work with bootstrap flash to flash 'Invalid username or password' when required
 
 5. Filesystem Restructure
 

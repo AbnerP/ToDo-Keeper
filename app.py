@@ -1,6 +1,5 @@
 # Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
-from flask import Flask, render_template, url_for, redirect, session
-from flask.helpers import flash
+from flask import Flask, render_template, url_for, redirect, session,flash
 from flask_bootstrap import Bootstrap
 from forms import LoginForm, RegisterForm
 from flask_sqlalchemy  import SQLAlchemy
@@ -84,7 +83,7 @@ def login():
                 login_user(user, remember=form.remember.data) #Allow user to access dashboard once logged in
                 return redirect(url_for('dashboard',name=user.username))
                 #return render_template('dashboard.html',name=user.username)
-        flash ('Invalid username or password','danger')
+        flash('Invalid username or password','danger')
     
     return render_template('login.html',form=form)
 
@@ -130,7 +129,7 @@ def settings():
 def logout():
     form = LoginForm()
     logout_user()
-    return render_template('login.html',form=form)
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
