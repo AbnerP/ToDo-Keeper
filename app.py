@@ -59,16 +59,18 @@ class Task(db.Model):
     text = db.Column(db.String(150),nullable=False)
     date_poster = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
-    
-
 @login_manager.user_loader
 def load_user(user_id):
         return User.query.get(int(user_id)) 
 
 @app.route('/')
 def index():
+    form = LoginForm()
     userStatus = current_user.is_active
-    return render_template('index.html',user=userStatus)
+    if userStatus:
+        return redirect(url_for('dashboard',tasks=tasklist,name=current_user.username))
+    else:
+        return render_template('login.html',form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -108,11 +110,22 @@ def signup():
 def dashboard():
     return render_template('dashboard.html',tasks=tasklist,name=current_user.username)
 
+@app.route('/dashboard/profile', methods=['GET','POST'])
+@login_required
+def profile():
+    return render_template('profile.html',user=current_user)
+
+@app.route('/dashboard/settings', methods=['GET','POST'])
+@login_required
+def settings():
+    return render_template('settings.html',user=current_user)
+
 @app.route('/logout')
 @login_required
 def logout():
+    form = LoginForm()
     logout_user()
-    return render_template('index.html')
+    return render_template('login.html',form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
