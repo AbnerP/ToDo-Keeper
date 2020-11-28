@@ -1,8 +1,10 @@
 1. Database Model 
     
-    1a)One to many Relationship (User model to many Task model)
+    //FINISHED{1a)One to many Relationship (User model to many Task model)}
 
-    1b)Due Date of Post
+    1b)Form for creating a Task
+
+    1c)Due Date of Post
 
 //FINISHED(2. Redirect signup and login to dashboard if user already loggedin)
 
