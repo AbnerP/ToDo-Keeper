@@ -3,7 +3,7 @@
 {% extends "index.html" %}
 
 {% block title %}
-ToDo Keeper - Profile
+Profile
 {% endblock %}
 
 {% block styles %}
@@ -12,36 +12,8 @@ ToDo Keeper - Profile
 {% endblock %} 
 
 {% block content %}
-    
-
-    <h1>Profile</h1>
-    <br><br>
+    <h1>Profile</h1><hr>
     <h4><strong>Username: </strong> {{ user.username }}</h4> <br>
     <h4><strong>Email: </strong> {{ user.email }}</h4><br>
     <h4><strong>Image Name: </strong> {{ user.image_file }}</h4><br>
-
-
-    <!--<div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="/dashboard">All Tasks<span class="sr-only">(current)</span></a></li>
-            <li><a href="/dashboard">Tags</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Welcome, {{ name }}</h1>
-        </div>
-        <div>
-          {% for task in tasks %}
-            <br>
-            <h3>{{ task.Task }}</h1>
-            <h6>Due {{ task.due_date }}</h6>
-            <h6>Created By {{ task.User }} on {{ task.date_posted }}</h6>
-          {% endfor %}
-        </div>
-        
-      </div>
-    </div>-->
-
 {% endblock %}

@@ -4,7 +4,7 @@
 
     1b)Due Date of Post
 
-2. Redirect signup and login to dashboard if user already loggedin
+//FINISHED(2. Redirect signup and login to dashboard if user already loggedin)
 
 3. Fix bug of signing up with already existing username and/or password
 
