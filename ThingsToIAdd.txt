@@ -10,9 +10,11 @@
 
     3a)Username/email already taken
 
-    //FINISHED(3b)Confirm Password)  
+    //FINISHED(3b)Confirm Password) 
 
-4. Filesystem Restructure
+4. Be able to log in with email OR username 
 
-5. Remember Me not working
+5. Filesystem Restructure
+
+6. Remember Me not working
 
