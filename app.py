@@ -1,7 +1,7 @@
 # Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
 from flask import Flask, render_template, url_for, redirect, session,flash
 from flask_bootstrap import Bootstrap
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, TaskForm
 from flask_sqlalchemy  import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -76,15 +76,17 @@ def load_user(user_id):
 @app.route('/')
 def index():
     form = LoginForm()
+    formT = TaskForm()
     userStatus = current_user.is_active
     if userStatus:
-        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username))
+        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username,form=formT))
     else:
         return render_template('login.html',form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    formT = TaskForm()
     
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -92,7 +94,7 @@ def login():
             if check_password_hash(user.password,form.password.data):
                 login_user(user, remember=form.remember.data) #Allow user to access dashboard once logged in
                 print("LOG IN -'"+str(current_user.username+"'"))
-                return redirect(url_for('dashboard',name=user.username))
+                return redirect(url_for('dashboard',name=user.username,form=formT))
                 #return render_template('dashboard.html',name=user.username)
         flash('Invalid username or password','danger')
     
@@ -101,6 +103,7 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
+    formT = TaskForm()
     userStatus = current_user.is_active
 
     if form.validate_on_submit():
@@ -114,7 +117,7 @@ def signup():
         print("NEW USER -'"+str(current_user.username+"'"))
         
         flash(f'Account created for {form.username.data}!','success')
-        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username))
+        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username,form=formT))
         #return '<h1> Hello '+form.username.data+'!</h1>'
 
     return render_template('signup.html', form=form)
@@ -122,8 +125,9 @@ def signup():
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard():
+    form = TaskForm
     userStatus = current_user.is_active
-    return render_template('dashboard.html',userStatus=userStatus,tasks=tasklist,name=current_user.username)
+    return render_template('dashboard.html',userStatus=userStatus,tasks=tasklist,name=current_user.username,form=form)
 
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
