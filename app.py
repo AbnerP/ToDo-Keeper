@@ -68,7 +68,7 @@ def index():
     form = LoginForm()
     userStatus = current_user.is_active
     if userStatus:
-        return redirect(url_for('dashboard',tasks=tasklist,name=current_user.username))
+        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username))
     else:
         return render_template('login.html',form=form)
 
@@ -91,6 +91,7 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
+    userStatus = current_user.is_active
 
     if form.validate_on_submit():
         hashPass = generate_password_hash(form.password.data, method='sha256')
@@ -100,7 +101,7 @@ def signup():
         db.session.commit()
         login_user(newUser,remember=form.remember.data)
         
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username))
         #return '<h1> Hello '+form.username.data+'!</h1>'
 
     return render_template('signup.html', form=form)
@@ -108,17 +109,20 @@ def signup():
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard():
-    return render_template('dashboard.html',tasks=tasklist,name=current_user.username)
+    userStatus = current_user.is_active
+    return render_template('dashboard.html',userStatus=userStatus,tasks=tasklist,name=current_user.username)
 
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
 def profile():
-    return render_template('profile.html',user=current_user)
+    userStatus = current_user.is_active
+    return render_template('profile.html',userStatus=userStatus,user=current_user)
 
 @app.route('/dashboard/settings', methods=['GET','POST'])
 @login_required
 def settings():
-    return render_template('settings.html',user=current_user)
+    userStatus = current_user.is_active
+    return render_template('settings.html',userStatus=userStatus,user=current_user)
 
 @app.route('/logout')
 @login_required

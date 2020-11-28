@@ -1,17 +1,25 @@
 <!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
 
-{% extends "bootstrap/base.html" %}
+    {%- block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- endblock metas %}
 
-{% block title %}
-ToDo Keeper
-{% endblock %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
-{% endblock %}
-
-{% block content %} 
+    {%- block styles %}
+    <!-- Bootstrap -->
+    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+    {% block navbar %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -25,10 +33,10 @@ ToDo Keeper
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            {% if user %}
+            {% if userStatus %}
               <li><a href="{{ url_for('dashboard') }}">DashBoard</a></li>
-              <li><a href="/dashboard">Profile</a></li>
-              <li><a href="/dashboard">Settings</a></li>
+              <li><a href="/dashboard/profile">Profile</a></li>
+              <li><a href="/dashboard/settings">Settings</a></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
               <li class="active"><a href="/dashboard">Home</a></li>
@@ -39,13 +47,17 @@ ToDo Keeper
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+    {%- endblock navbar %}
 
-    <div class="container">
+    {% block content -%}
+    {%- endblock content %}
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
-
-    </div><!-- /.container -->
-{% endblock %}
+    {% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    {%- endblock scripts %}
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

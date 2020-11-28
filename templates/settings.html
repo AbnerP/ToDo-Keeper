@@ -1,6 +1,6 @@
 <!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
 
-{% extends "bootstrap/base.html" %}
+{% extends "index.html" %}
 
 {% block title %}
 ToDo Keeper - Settings
@@ -12,7 +12,7 @@ ToDo Keeper - Settings
 {% endblock %} 
 
 {% block content %}
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <!--<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -35,8 +35,10 @@ ToDo Keeper - Settings
           </form>
         </div>
       </div>
-    </nav>
+    </nav>-->
+
     <h1>Settings - {{ user.username }}</h1>
+    
     <!--
     <div class="container-fluid">
       <div class="row">
