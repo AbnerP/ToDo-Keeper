@@ -26,8 +26,8 @@ Dashboard
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/dashboard">Settings</a></li>
             <li><a href="/dashboard">Profile</a></li>
+            <li><a href="/dashboard">Settings</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -47,9 +47,15 @@ Dashboard
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, {{ name }}</h1>
-
-
         </div>
+        <div>
+          {% for task in tasks %}
+            <h4>{{ task.Task }}</h1>
+            <h5>Due {{ task.due_date }}</h2>
+            <p>Created By {{ task.User }} on {{ task.date_posted }}</p>
+          {% endfor %}
+        </div>
+        
       </div>
     </div>
 {% endblock %}
