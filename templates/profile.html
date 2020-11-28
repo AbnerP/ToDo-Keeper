@@ -37,7 +37,14 @@ Dashboard
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <h1>Profile</h1>
+    <br><br>
+    <h4><strong>Username: </strong> {{ user.username }}</h4> <br>
+    <h4><strong>Email: </strong> {{ user.email }}</h4><br>
+    <h4><strong>Image Name: </strong> {{ user.image_file }}</h4><br>
+
+
+    <!--<div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
@@ -47,6 +54,8 @@ Dashboard
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, {{ name }}</h1>
+        </div>
+        <div>
           {% for task in tasks %}
             <br>
             <h3>{{ task.Task }}</h1>
@@ -54,6 +63,8 @@ Dashboard
             <h6>Created By {{ task.User }} on {{ task.date_posted }}</h6>
           {% endfor %}
         </div>
+        
       </div>
-    </div>
+    </div>-->
+
 {% endblock %}
