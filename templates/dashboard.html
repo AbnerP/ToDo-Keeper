@@ -23,11 +23,12 @@ ToDo Keeper
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, {{ name }}!</h1>
           {% for task in tasks %}
-            <article class="media content-section">
-              <div class="media-body">
+            <article class="media content-section ">
+              <div class="media-body border">
                 <h2><a class="article-title" href="#">{{ task.Task }}</a>&#9; Due {{ task.due_date }}</h2>
                 <p>Created By <a href="/dashboard/profile">{{ task.User }}</a> on {{ task.date_posted }}</p>
               </div>
+            </article>
 
             </article>
           {% endfor %}
