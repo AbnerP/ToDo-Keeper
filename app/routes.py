@@ -1,51 +1,14 @@
-# Code template taken from https://github.com/PrettyPrinted/building_user_login_system/
-from flask import Flask, render_template, url_for, redirect, session,flash
-from flask_bootstrap import Bootstrap
-from forms import LoginForm, RegisterForm, TaskForm
-from flask_sqlalchemy  import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import render_template, url_for, redirect, session,flash
+from app import app,db
+from app.forms import LoginForm, RegisterForm, TaskForm
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime
-
-#Initialize app
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-bootstrap = Bootstrap(app)
-db = SQLAlchemy(app)
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.models import User,Task
 
 #Initialize Flask Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
-#Database Model
-class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True, nullable=False)
-    email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(80),nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    
-    tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 
-    #Task references actually model class
-    #lazy means sqlalchemy will load the data from the database automatically
-    
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(150),nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    #date_due = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
-    #ForeignKey references actual table name and column name hence user(table).id(column)
-    
-    def __repr__(self):
-        return f"Task('{self.text}', '{self.date_posted}')"
     
 @login_manager.user_loader
 def load_user(user_id):
@@ -57,7 +20,7 @@ def index():
     formT = TaskForm()
     userStatus = current_user.is_active
     if userStatus:
-        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username,form=formT))
+        return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=formT))
     else:
         return render_template('login.html',form=form)
 
@@ -111,6 +74,7 @@ def dashboard():
         
         db.session.add(newTask)
         db.session.commit()
+        
         print("NEW TASK CREATED -'"+str(newTask)+"'")
         flash(f'{current_user.username} created a task!','success')
         return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=form))
@@ -137,6 +101,3 @@ def logout():
     print("LOG OUT  -'"+str(current_user.username+"'"))
     logout_user()
     return redirect(url_for('login'))
-
-if __name__ == '__main__':
-    app.run(debug=True)
