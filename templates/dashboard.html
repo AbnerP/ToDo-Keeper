@@ -23,24 +23,26 @@ ToDo Keeper
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome, {{ name }}!</h1>
+        <!--{{ wtf.quick_form(form) }}-->
+          <form class="form-signin" method="POST" action="/dashboard">
+            <h4 class="form-signin-heading">Add New Task</h4>
+            {{ form.hidden_tag() }}
+            {{form.text(class_="form-control")}}
+            <br>
+            <button class="btn btn-light" type="submit">Add Task</button>
+          </form>
+          <hr>
           {% for task in tasks %}
             <article class="media content-section ">
               <div class="media-body border">
-                <h2><a class="article-title" href="#">{{ task.Task }}</a>&#9; Due {{ task.due_date }}</h2>
-                <p>Created By <a href="/dashboard/profile">{{ task.User }}</a> on {{ task.date_posted }}</p>
+                <ul>
+                  <h3><a class="article-title" href="/dashboard/task?taskid={{task.id}}">{{ task.text }}</a>&#9;<h4> Due null</h4></h3>
+                  <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted }}</p>
+                </ul>
+                <hr>
               </div>
             </article>
-
-            </article>
           {% endfor %}
-
-          <form class="form-signin" method="POST" action="/login">
-            <h2 class="form-signin-heading">Log in</h2>
-            {{ wtf.form_field(form.text) }}
-            {{ wtf.form_field(form.date) }}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Task</button>
-          </form>
-
         </div>
       </div>
     </div>

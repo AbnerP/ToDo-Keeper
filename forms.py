@@ -1,7 +1,7 @@
 from werkzeug.utils import validate_arguments
 from datetime import datetime
 from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, BooleanField, DateField
+from wtforms import StringField, PasswordField, BooleanField, DateField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, Email, Length, EqualTo,ValidationError
 
 class LoginForm(FlaskForm):
@@ -18,8 +18,9 @@ class RegisterForm(FlaskForm):
     
 class TaskForm(FlaskForm):
     text = StringField('Task', validators=[DataRequired(),InputRequired(), Length(max=150)])
-    date = DateField('Date Due')
+    #date = DateField('Date Due')
+    submit = SubmitField('Add Task')
     
-    def validate_date(form, field):
-        if field.data < datetime.date.today():
-            raise ValidationError("The date cannot be in the past!")
+    #def validate_date(form, field):
+        #if field.data < datetime.date.today():
+            #raise ValidationError("The date cannot be in the past!")

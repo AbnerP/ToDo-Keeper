@@ -21,28 +21,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-#Tasks
-tasklist = [
-    {
-        'User': 'User 1',
-        'Task':'Task 1',
-        'due_date': '1/1/2021',
-        'date_posted':'12/1/2020'
-    },
-    {
-        'User': 'User 1',
-        'Task':'Task 2',
-        'due_date': '1/2/2021',
-        'date_posted':'12/1/2020'
-    },
-    {
-        'User': 'User 1',
-        'Task':'Task 3',
-        'due_date': '1/3/2021',
-        'date_posted':'12/1/2020'
-    }
-]
-
 #Database Model
 class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     id = db.Column(db.Integer, primary_key=True)
@@ -62,7 +40,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(150),nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    date_due = db.Column(db.DateTime)
+    #date_due = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
     #ForeignKey references actual table name and column name hence user(table).id(column)
     
@@ -117,7 +95,7 @@ def signup():
         print("NEW USER -'"+str(current_user.username+"'"))
         
         flash(f'Account created for {form.username.data}!','success')
-        return redirect(url_for('dashboard',userStatus=userStatus, tasks=tasklist,name=current_user.username,form=formT))
+        return redirect(url_for('dashboard',userStatus=userStatus,name=current_user.username,form=formT))
         #return '<h1> Hello '+form.username.data+'!</h1>'
 
     return render_template('signup.html', form=form)
@@ -125,9 +103,20 @@ def signup():
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
 def dashboard():
-    form = TaskForm
+    form = TaskForm()
     userStatus = current_user.is_active
-    return render_template('dashboard.html',userStatus=userStatus,tasks=tasklist,name=current_user.username,form=form)
+    
+    if form.validate_on_submit():
+        newTask = Task(text=form.text.data, user_id=current_user.id)
+        
+        db.session.add(newTask)
+        db.session.commit()
+        print("NEW TASK CREATED -'"+str(newTask)+"'")
+        flash(f'{current_user.username} created a task!','success')
+        return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=form))
+        #return '<h1> Hello '+form.username.data+'!</h1>'
+    
+    return render_template('dashboard.html',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username ,form=form)
 
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required

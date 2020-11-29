@@ -1,18 +1,18 @@
 1. Database Model 
     
-    //FINISHED{1a)One to many Relationship (User model to many Task model)}
+    1a)//FINISHED{One to many Relationship (User model to many Task model)}
 
     1b)Form for creating a Task
 
     1c)Due Date of Post
 
-//FINISHED(2. Redirect signup and login to dashboard if user already loggedin)
+2.//FINISHED{Redirect signup and login to dashboard if user already loggedin}
 
 3. Fix bug of signing up 
 
     3a)Username/email already taken
 
-    //FINISHED(3b)Confirm Password) 
+    3b)//FINISHED{Confirm Password} 
 
 4. Message Flashing
 
