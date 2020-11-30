@@ -1,2 +1,5 @@
 # ToDo-Keeper
-Web based application built using Flask focused on having an online To Do List accessible from any device. Project for CSC 210.
+ToDo Keeper is a web based To Do List app which aims to make any everyday To Do List accessible from any device with a access to a web browser.
+
+Originally started as a project for a CSC-210 class.
+
