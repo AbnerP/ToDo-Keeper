@@ -1,10 +1,18 @@
-1. Database Model 
+1. Database Functionality 
     
     1a)//FINISHED{One to many Relationship (User model to many Task model)}
 
-    1b)Form for creating a Task
+    1b)//FINISHED{Form for creating a Task}
 
     1c)Due Date of Post
+    
+    1d)Tags in Form and Database
+    
+    1e)Profile Picture/Page upload/default
+    
+    1f)Forgot Password
+    
+    1f)Send Email for creating account
 
 2.//FINISHED{Redirect signup and login to dashboard if user already loggedin}
 
@@ -25,4 +33,11 @@
 5. //FINISHED {Filesystem Restructure as a package}
 
 6. Remember Me not working
+
+7. Bootstrap
+    
+    7a) Improve the UI of Home Page to inclue both LogIn/SignUp forms next to each other
+    
+    7b) Pick and choose a color scheme to carry out through the whole website
+    
 
