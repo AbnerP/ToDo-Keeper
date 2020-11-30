@@ -1,4 +1,4 @@
-from werkzeug.utils import validate_arguments
+from werkzeug.security import check_password_hash
 from datetime import datetime
 from flask_wtf import FlaskForm 
 from wtforms import StringField, PasswordField, BooleanField, DateField, SubmitField
@@ -9,6 +9,11 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
     password = PasswordField('Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('Remember me')
+    
+    def validate_username(self,username):
+        user = User.query.filter_by(username=username.data).first()
+        if not user:
+            raise ValidationError("An account with that username does not exist.")
 
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), InputRequired(), Email(message='Invalid email'), Length(max=50)])

@@ -1,0 +1,30 @@
+1. Database Functionality 
+
+    1c)Due Date of Post
+    
+    1d)Tags in Form and Database
+    
+    1e)Profile Picture/Page upload/default
+    
+    1f)Forgot Password
+    
+    1f)Send Email for creating account
+
+4. Message Flashing
+
+    4a)Work with bootstrap flash to flash 'Invalid username or password' when required
+
+    4b) Flash 'Account succesfully created for {{ user }} when sign up or log In
+
+    supplemental video url = 'https://www.youtube.com/watch?v=qbnqNWXf_tU&ab_channel=TechWithTim'
+
+
+6. Remember Me not working
+
+7. Bootstrap
+    
+    7a) Improve the UI of Home Page to inclue both LogIn/SignUp forms next to each other
+    
+    7b) Pick and choose a color scheme to carry out through the whole website
+    
+
