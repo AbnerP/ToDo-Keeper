@@ -8,11 +8,11 @@
 
 2.//FINISHED{Redirect signup and login to dashboard if user already loggedin}
 
-3. Fix bug of signing up 
+3.//FINISHED {Fix bug of signing up}
 
-    3a)Username/email already taken
+    3a)//FINISHED {Username/email already taken}
 
-    3b)//FINISHED{Confirm Password} 
+    3b)//FINISHED {Confirm Password} 
 
 4. Message Flashing
 
@@ -22,7 +22,7 @@
 
     supplemental video url = 'https://www.youtube.com/watch?v=qbnqNWXf_tU&ab_channel=TechWithTim'
 
-5. Filesystem Restructure
+5. //FINISHED {Filesystem Restructure as a package}
 
 6. Remember Me not working
 
