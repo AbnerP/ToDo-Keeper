@@ -1,0 +1,19 @@
+<!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
+
+{% extends "index.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %} 
+
+{% block content %}
+    <h1>Profile</h1><hr>
+    <h4><strong>Username: </strong> {{ user.username }}</h4> <br>
+    <h4><strong>Email: </strong> {{ user.email }}</h4><br>
+    <h4><strong>Image Name: </strong> {{ user.image_file }}</h4><br>
+{% endblock %}

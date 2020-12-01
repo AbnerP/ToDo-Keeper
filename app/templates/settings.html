@@ -1,0 +1,17 @@
+<!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
+
+{% extends "index.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %} 
+
+{% block content %}
+    <h1>Settings - {{ user.username }}</h1>
+    <hr>
+{% endblock %}
