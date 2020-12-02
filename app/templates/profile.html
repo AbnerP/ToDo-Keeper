@@ -13,6 +13,7 @@ Profile
 
 {% block content %}
     <h1>Profile</h1><hr>
+    <img style="border-radius: 100%;width: 10%;height: 10%;" src="{{ image_file }}">
     <h4><strong>Username: </strong> {{ user.username }}</h4> <br>
     <h4><strong>Email: </strong> {{ user.email }}</h4><br>
     <h4><strong>Image Name: </strong> {{ user.image_file }}</h4><br>

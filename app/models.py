@@ -8,7 +8,7 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(80),nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20), nullable=False, default='default.png')
     
     tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 
     #Task references actually model class

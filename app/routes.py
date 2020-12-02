@@ -85,8 +85,9 @@ def dashboard():
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
 def profile():
+    image_file = url_for('static',filename=current_user.image_file)
     userStatus = current_user.is_active
-    return render_template('profile.html',userStatus=userStatus,user=current_user)
+    return render_template('profile.html',userStatus=userStatus,user=current_user,image_file=image_file)
 
 @app.route('/dashboard/settings', methods=['GET','POST'])
 @login_required
