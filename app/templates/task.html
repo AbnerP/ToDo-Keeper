@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+ToDo Keeper
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %} 
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <article class="media content-section ">
+            <div class="media-body border">
+              <ul>
+                <h3>{{ task.text }}</h3>
+                <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
+              </ul>
+              <hr>
+            </div>
+          </article>
+          <a class="btn btn-light" href="{{taskid}}/update" >Update</a>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+        </div>
+        
+      </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete '{{task.text}}'
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{url_for('delete_task',task_id=task.id)}}" method="POST">
+          <input class="btn btn-danger" value="Delete" type="submit" >
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

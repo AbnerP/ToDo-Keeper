@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+ToDo Keeper
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %} 
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <article class="media content-section ">
+            <div class="media-body border">
+              <ul>
+                <h3>{{ task.text }}</h3>
+                <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
+              </ul>
+              <hr>
+            </div>
+          </article>
+          <form class="form-signin" method="POST" action="">
+            <h4 class="form-signin-heading">Update Task</h4>
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.text) }}
+            <!--{{ wtf.form_field(form.date) }}-->
+            <br>
+            <button class="btn btn-light" type="submit">Update</button>
+        </form>
+        </div>
+        
+      </div>
+    </div>
+
+
+{% endblock %}
