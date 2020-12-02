@@ -1,6 +1,7 @@
 from werkzeug.security import check_password_hash
 from datetime import datetime
 from flask_wtf import FlaskForm 
+from flask_login import current_user
 from wtforms import StringField, PasswordField, BooleanField, DateField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, Email, Length, EqualTo,ValidationError
 from app.models import User
@@ -41,3 +42,20 @@ class TaskForm(FlaskForm):
     #def validate_date(form, date):
         #if date.data < datetime.date.today():
             #raise ValidationError("The date cannot be in the past!")
+
+class UpdateAccoountForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
+    email = StringField('Email', validators=[DataRequired(), InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    submit = SubmitField('Update')
+    
+    def validate_username(self,username):
+        if username.data != current_user.username:
+            user = User.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError("Username is already taken. Please choose another one.")
+    
+    def validate_email(self,email):
+        if email.data != current_user.email:
+            email = User.query.filter_by(email=email.data).first()
+            if email:
+                raise ValidationError("An account is already associated with this email address. Please choose another one.")

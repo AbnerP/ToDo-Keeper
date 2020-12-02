@@ -1,6 +1,7 @@
 from flask import render_template, url_for, redirect, session,flash
+from flask.globals import request
 from app import app,db
-from app.forms import LoginForm, RegisterForm, TaskForm
+from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User,Task
@@ -85,9 +86,20 @@ def dashboard():
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
 def profile():
+    form = UpdateAccoountForm()
     image_file = url_for('static',filename=current_user.image_file)
     userStatus = current_user.is_active
-    return render_template('profile.html',userStatus=userStatus,user=current_user,image_file=image_file)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        
+        flash('Your account has been updated!','success')
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    return render_template('profile.html',userStatus=userStatus,user=current_user,image_file=image_file,form=form)
 
 @app.route('/dashboard/settings', methods=['GET','POST'])
 @login_required
