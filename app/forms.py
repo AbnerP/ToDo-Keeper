@@ -1,6 +1,7 @@
 from werkzeug.security import check_password_hash
 from datetime import datetime
 from flask_wtf import FlaskForm 
+from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, BooleanField, DateField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, Email, Length, EqualTo,ValidationError
@@ -46,6 +47,7 @@ class TaskForm(FlaskForm):
 class UpdateAccoountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
     email = StringField('Email', validators=[DataRequired(), InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg','png'])])
     submit = SubmitField('Update')
     
     def validate_username(self,username):

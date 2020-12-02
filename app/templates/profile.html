@@ -17,15 +17,16 @@ Profile
     
     <div class="container">
         <h1>Profile</h1><hr>
-        <img style="border-radius: 100%;width: 10%;height: 10%;" src="{{ image_file }}">
+        <img style="border-radius: 100%;width: 100px;height: 100px;" src="{{ image_file }}">
         <h4><strong>Username: </strong> {{ user.username }}</h4> <br>
         <h4><strong>Email: </strong> {{ user.email }}</h4><br>
-        <form class="form-signin" method="POST" action="">
+        <form class="form-signin" method="POST" action="" enctype="multipart/form-data">
           <h2 class="form-signin-heading">Account Info</h2>
           <hr>
           {{ form.hidden_tag() }}
           {{ wtf.form_field(form.username) }}
           {{ wtf.form_field(form.email) }}
+          {{ wtf.form_field(form.picture) }}
           {{ wtf.form_field(form.submit) }}
         </form>
     </div>

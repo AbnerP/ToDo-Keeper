@@ -1,15 +1,15 @@
 from flask import render_template, url_for, redirect, session,flash
 from flask.globals import request
-from app import app,db
+from app import app,db,login_manager
 from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
+import os
 from app.models import User,Task
 
 #Initialize Flask Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+
     
 @login_manager.user_loader
 def load_user(user_id):
@@ -83,13 +83,26 @@ def dashboard():
     
     return render_template('dashboard.html',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username ,form=form)
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    f_name, f_ext = os.path.splitext(form_picture.filename)
+    picture_filename = random_hex+f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pics',picture_filename)
+    form_picture.save(picture_path)
+    return picture_filename
+
+
+
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
 def profile():
     form = UpdateAccoountForm()
-    image_file = url_for('static',filename=current_user.image_file)
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     userStatus = current_user.is_active
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
