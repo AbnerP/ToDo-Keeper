@@ -15,6 +15,11 @@ class LoginForm(FlaskForm):
         if not user:
             raise ValidationError("An account with that username does not exist.")
 
+    def validate_password(self,password):
+        password = User.query.filter_by(password=password.data).first()
+        if not password:
+            raise ValidationError("Password is incorrect. Please try again.")
+
 class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
@@ -32,7 +37,7 @@ class RegisterForm(FlaskForm):
         if email:
             raise ValidationError("An account is already associated with this email address. Please choose another one.")
     
-    
+
 class TaskForm(FlaskForm):
     text = StringField('Task', validators=[DataRequired(),InputRequired(), Length(max=150)])
     #date = DateField('Date Due')
