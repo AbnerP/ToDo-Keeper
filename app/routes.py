@@ -1,12 +1,15 @@
+import os
+import secrets
+from app import app,db,login_manager
+from app.models import User,Task
+from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
 from flask import render_template, url_for, redirect, session,flash
 from flask.globals import request
-from app import app,db,login_manager
-from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-import secrets
-import os
-from app.models import User,Task
+from PIL import Image
+
+
 
 #Initialize Flask Login
 
@@ -14,6 +17,8 @@ from app.models import User,Task
 @login_manager.user_loader
 def load_user(user_id):
         return User.query.get(int(user_id)) 
+
+
 
 @app.route('/')
 def index():
@@ -71,6 +76,25 @@ def dashboard():
     userStatus = current_user.is_active
     
     if form.validate_on_submit():
+        newTask = Task(text=form.text.data,user_id=current_user.id)
+        print(newTask)
+        db.session.add(newTask)
+        db.session.commit()
+        
+        print("NEW TASK CREATED -'"+str(newTask)+"'")
+        flash(f'{current_user.username} created a task!','success')
+        return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=form))
+        #return '<h1> Hello '+form.username.data+'!</h1>'
+    
+    return render_template('dashboard.html',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username ,form=form)
+
+@app.route('/dashboard/task/new', methods=['GET','POST'])
+@login_required
+def new_task():
+    form = TaskForm()
+    userStatus = current_user.is_active
+    
+    if form.validate_on_submit():
         newTask = Task(text=form.text.data, user_id=current_user.id)
         
         db.session.add(newTask)
@@ -83,15 +107,20 @@ def dashboard():
     
     return render_template('dashboard.html',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username ,form=form)
 
+
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_filename = random_hex+f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics',picture_filename)
-    form_picture.save(picture_path)
+    
+    output_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    
     return picture_filename
-
-
 
 @app.route('/dashboard/profile', methods=['GET','POST'])
 @login_required
@@ -127,3 +156,7 @@ def logout():
     print("LOG OUT  -'"+str(current_user.username+"'"))
     logout_user()
     return redirect(url_for('login'))
+
+@app.before_request
+def make_session_permanent():
+    session.permanent=False

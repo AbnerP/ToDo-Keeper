@@ -27,7 +27,8 @@ ToDo Keeper
           <form class="form-signin" method="POST" action="{{url_for('dashboard')}}">
             <h4 class="form-signin-heading">Add New Task</h4>
             {{ form.hidden_tag() }}
-            {{form.text(class_="form-control")}}
+            {{ wtf.form_field(form.text) }}
+            <!--{{ wtf.form_field(form.date) }}-->
             <br>
             <button class="btn btn-light" type="submit">Add Task</button>
           </form>
@@ -36,7 +37,7 @@ ToDo Keeper
             <article class="media content-section ">
               <div class="media-body border">
                 <ul>
-                  <h3><a class="article-title" href="/dashboard/task?taskid={{task.id}}">{{ task.text }}</a>&#9;<h4> Due null</h4></h3>
+                  <h3><a class="article-title" href="/dashboard/task?taskid={{task.id}}">{{ task.text }}</a><!--&#9;<h4> Due null</h4>--></h3>
                   <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted }}</p>
                 </ul>
                 <hr>

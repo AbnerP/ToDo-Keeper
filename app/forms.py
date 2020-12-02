@@ -10,7 +10,7 @@ from app.models import User
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
     password = PasswordField('Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('Remember me')
+    remember = BooleanField('Keep me logged in?')
     
     def validate_username(self,username):
         user = User.query.filter_by(username=username.data).first()
@@ -22,7 +22,7 @@ class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
     password = PasswordField('Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80),EqualTo('password')])
-    remember = BooleanField('Remember me')
+    remember = BooleanField('Keep me logged in?')
     
     def validate_username(self,username):
         user = User.query.filter_by(username=username.data).first()
@@ -37,9 +37,20 @@ class RegisterForm(FlaskForm):
     
 class TaskForm(FlaskForm):
     text = StringField('Task', validators=[DataRequired(),InputRequired(), Length(max=150)])
-    #date = DateField('Date Due')
+    date = DateField('Date Due',format='%m/%d/%Y')
     submit = SubmitField('Add Task')
     
+    def process_formdata(self, date):
+        if date():
+            date_str = ' '.join(date()).strip()
+            if date_str == '':
+                self.data = None
+                return
+            try:
+                self.data = datetime.datetime.strptime(date_str, self.format).date()
+            except ValueError:
+                self.data = None
+                raise ValueError(self.gettext('Not a valid date value'))
     #def validate_date(form, date):
         #if date.data < datetime.date.today():
             #raise ValidationError("The date cannot be in the past!")
