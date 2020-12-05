@@ -8,6 +8,10 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(80),nullable=False)
+    security_question_1 = db.Column(db.String(15))
+    security_answer_1 = db.Column(db.String(80))
+    security_question_2 = db.Column(db.String(15))
+    security_answer_2 = db.Column(db.String(80))
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     
     tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 
