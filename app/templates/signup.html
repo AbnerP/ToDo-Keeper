@@ -1,4 +1,4 @@
-<!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
+<pip!-- Code template taken from https://github.com/PrettyPrinted/building_user_login_system/ -->
 
 {% extends "index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
@@ -22,6 +22,10 @@ ToDo Keeper - Sign Up
     {{ wtf.form_field(form.password) }}
     {{ wtf.form_field(form.confirm_password) }}
     {{ wtf.form_field(form.remember) }}
+    {{ wtf.form_field(form.security_question_1) }}
+    {{ wtf.form_field(form.security_answer_1) }}
+    {{ wtf.form_field(form.security_question_2) }}
+    {{ wtf.form_field(form.security_answer_2) }}
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
   </form>
 </div>
