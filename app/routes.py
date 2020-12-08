@@ -9,11 +9,6 @@ from flask.globals import request
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from PIL import Image
-
-
-
-#Initialize Flask Login
-
     
 @login_manager.user_loader
 def load_user(user_id):
