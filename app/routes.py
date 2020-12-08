@@ -2,8 +2,8 @@ import os
 from os import abort
 import secrets
 from app import app,db,login_manager
-from app.models import User,Task
-from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
+from app.models import User,Task,Tag
+from app.forms import LoginForm, NewTag, RegisterForm, TaskForm, UpdateAccoountForm
 from flask import render_template, url_for, redirect, session, flash, abort
 from flask.globals import request
 from flask_login import login_user, login_required, logout_user, current_user
@@ -77,17 +77,38 @@ def dashboard():
     userStatus = current_user.is_active
     
     if form.validate_on_submit():
-        newTask = Task(text=form.text.data,user_id=current_user.id)
-        print(newTask)
-        db.session.add(newTask)
+        newTag = Task(name=form.name.data,user_id=current_user.id)
+        print(newTag)
+        db.session.add(newTag)
         db.session.commit()
         
-        print("NEW TASK CREATED -'"+str(newTask)+"'")
+        print("NEW TASK CREATED -'"+str(newTag)+"'")
         flash(f'{current_user.username} created a task!','success')
         return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=form))
         #return '<h1> Hello '+form.username.data+'!</h1>'
     
     return render_template('dashboard.html',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username ,form=form)
+
+@app.route('/tags', methods=['GET','POST'])
+@login_required
+def tags():
+    form = NewTag()
+    userStatus = current_user.is_active
+    tags = Tag.query.all()
+    if form.validate_on_submit():
+        newTag = Task(name=form.name.data,user_id=current_user.id)
+        print(newTag)
+        db.session.add(newTag)
+        db.session.commit()
+        
+        print("NEW TASK CREATED -'"+str(newTag)+"'")
+        flash(f'{current_user.username} created a task!','success')
+        return redirect(url_for('dashboard',userStatus=userStatus,tasks=current_user.tasks,name=current_user.username,form=form))
+        #return '<h1> Hello '+form.username.data+'!</h1>'
+    
+    return render_template('tags.html',form=form,tags=tags)
+
+
 
 @app.route('/task/<int:task_id>', methods=['GET','POST'])
 @login_required
@@ -97,7 +118,7 @@ def task(task_id):
     if task.user_id != current_user.id:
         abort(403)
     form = TaskForm()
-    form.text.data = task.text
+    form.name.data = task.name
     return render_template('task.html',taskid=task_id,userStatus=userStatus,task=task,name=current_user.username)
 
 @app.route('/task/<int:task_id>/update', methods=['GET','POST'])
@@ -112,12 +133,12 @@ def update_task(task_id):
     form = TaskForm()
     
     if form.validate_on_submit():
-        task.text = form.text.data
+        task.name = form.name.data
         db.session.commit()
         return redirect(url_for('task',task_id=task_id,))
     
     elif request.method == 'GET':
-        form.text.data = task.text
+        form.name.data = task.name
         
     return render_template('taskUpdate.html',userStatus=userStatus,task=task,name=current_user.username,form=form)
 
@@ -138,7 +159,7 @@ def delete_task(task_id):
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
-    f_name, f_ext = os.path.splitext(form_picture.filename)
+    f_name, f_ext = os.path.spliname(form_picture.filename)
     picture_filename = random_hex+f_ext
     picture_path = os.path.join(app.root_path, 'static/profile_pics',picture_filename)
     

@@ -15,6 +15,7 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     
     tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 
+    tags = db.relationship('Tag',backref='creatorOfTag',lazy=True) 
     #Task references actually model class
     #lazy means sqlalchemy will load the data from the database automatically
     
@@ -30,5 +31,20 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
     #ForeignKey references actual table name and column name hence user(table).id(column)
     
+    tags = db.relationship('Tag',backref='Tasko',lazy=True) 
+    
     def __repr__(self):
         return f"Task('{self.text}', '{self.date_posted}')"
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20),nullable=False)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    task_id = db.Column(db.Integer, db.ForeignKey('task.id')) 
+    
+    def __repr__(self):
+        return f"Tag('{self.name})"
+    
+    
+    

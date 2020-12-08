@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9  col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Tags</h1>
+            <!--{{ wtf.quick_form(form) }}-->
+          
+            <form class="form-signin" method="POST" action="{{url_for('tags')}}">
+            <h4 class="form-signin-heading">Add New Tag</h4>
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.name) }}
+            <!--{{ wtf.form_field(form.date) }}-->
+            <br>
+            <button class="btn btn-light" type="submit">Add Tag</button>
+          </form>
+          
+          <hr>
+
+          {% for tag in tags %}
+            <article class="media content-section ">
+              <div class="media-body border">
+
+                <ul>
+                  <h4>{{tag.name}}</h4>
+                </ul>
+
+                <hr>
+              </div>
+            </article>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

@@ -72,3 +72,7 @@ class UpdateAccoountForm(FlaskForm):
             email = User.query.filter_by(email=email.data).first()
             if email:
                 raise ValidationError("An account is already associated with this email address. Please choose another one.")
+
+class NewTag(FlaskForm):
+    name = StringField('Tag Name', validators=[DataRequired(),InputRequired(), Length(max=20)])
+    submit = SubmitField('Add Tag')
