@@ -17,7 +17,6 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     security_answer_1 = db.Column(db.String(80))
     security_question_2 = db.Column(db.String(15))
     security_answer_2 = db.Column(db.String(80))
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     
     tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 
     #Task references actually model class
@@ -36,4 +35,4 @@ class Task(db.Model):
     #ForeignKey references actual table name and column name hence user(table).id(column)
     
     def __repr__(self):
-        return f"Task('{self.text}', '{self.date_posted}')"
+        return f"Task('{self.text}', '{self.date_posted}')" 

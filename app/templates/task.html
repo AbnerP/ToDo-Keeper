@@ -12,21 +12,14 @@ ToDo Keeper
 
 {% block content %}
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <article class="media content-section ">
-            <div class="media-body border">
-              <ul>
-                <h3>{{ task.text }}</h3>
-                <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
-              </ul>
-              <hr>
-            </div>
-          </article>
-          <a class="btn btn-light" href="{{taskid}}/update" >Update</a>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
-        </div>
-        
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <ul>
+          <h3>{{ task.text }}</h3>
+          <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
+        </ul>
+        <hr>          
+        <a class="btn btn-light" href="{{taskid}}/update" >Update</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
       </div>
     </div>
 

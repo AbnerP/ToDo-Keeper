@@ -183,4 +183,4 @@ def logout():
 
 @app.before_request
 def make_session_permanent():
-    session.permanent=False
+    session.permanent=False 
