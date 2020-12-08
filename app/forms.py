@@ -100,7 +100,6 @@ class TaskForm(FlaskForm):
         #if date.data < datetime.date.today():
             #raise ValidationError("The date cannot be in the past!")
 
-<<<<<<< HEAD
 class UpdateAccoountForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
     email = StringField('Email', validators=[DataRequired(), InputRequired(), Email(message='Invalid email'), Length(max=50)])
@@ -118,17 +117,3 @@ class UpdateAccoountForm(FlaskForm):
             email = User.query.filter_by(email=email.data).first()
             if email:
                 raise ValidationError("An account is already associated with this email address. Please choose another one.")
-=======
-# class RequestResetForm(FlaskForm):
-#     email = StringField('Email', validators=[DataRequired(), Email()])
-#     submit = SubmitField('Request Password Reset')
-
-#     def validate_email(self, email):
-#         user = User.query.filter_by(email=email.data).first()
-#         if user is None:
-#             raise ValidationError('There is no account with that email. You must register first.')
-
-# class ResetPasswordForm(FlaskForm):
-#     password = PasswordField('Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80)])
-#     submit = SubmitField('Reset Password')
->>>>>>> forgot_password
