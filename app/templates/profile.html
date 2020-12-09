@@ -10,7 +10,7 @@ Profile
 
 {% block styles %}
 {{super()}}
-
+<link rel="stylesheet" href="{{url_for('.static', filename='profile.css')}}">
 <link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
 {% endblock %} 
 

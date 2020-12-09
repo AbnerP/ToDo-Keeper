@@ -178,7 +178,12 @@ body {
     transition: all 1s ease;
 }
 
-
+.media-body a{
+  color: #ff6363;
+}
+.media-body .update{
+  color: #2fafff;
+}
 
 
 
