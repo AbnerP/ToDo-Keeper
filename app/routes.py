@@ -3,7 +3,7 @@ from os import abort
 import secrets
 from app import app,db,login_manager
 from app.models import User,Task
-from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm
+from app.forms import LoginForm, RegisterForm, TaskForm, UpdateAccoountForm, UsernameForm, ResetPasswordForm
 from flask import render_template, url_for, redirect, session, flash, abort
 from flask.globals import request
 from flask_login import login_user, login_required, logout_user, current_user
@@ -52,8 +52,7 @@ def signup():
     if form.validate_on_submit():
         hashPass = generate_password_hash(form.password.data, method='sha256')
         newUser = User(username=form.username.data, email=form.email.data, password=hashPass,
-                        security_question_1=form.security_question_1.data, security_answer_1=form.security_answer_1.data,
-                        security_question_2=form.security_question_2.data, security_answer_2=form.security_answer_2.data)
+                        security_question_1=form.security_question_1.data, security_answer_1=form.security_answer_1.data)
         
         db.session.add(newUser)
         db.session.commit()
@@ -66,6 +65,32 @@ def signup():
         #return '<h1> Hello '+form.username.data+'!</h1>'
 
     return render_template('signup.html', form=form)
+
+@app.route('/forgotpassword', methods=['GET', 'POST'])
+def forgotpassword():
+    form = UsernameForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if user.security_question_1:
+                return redirect(url_for('resetpassword', username=form.username.data))
+            flash('No security questions set up for this account. Please contact system administrator for further assistance.')
+            user = User.query.filter_by(username=form.username.data).first()
+    return render_template('forgotpassword.html', form=form)
+
+@app.route('/resetpassword/<username>', methods=['GET', 'POST'])
+def resetpassword(username):
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if form.security_answer_1.data.lower() == user.security_answer_1.lower():
+            hashPass = generate_password_hash(form.password.data, method='sha256')
+            user.password = hashPass
+            db.session.commit()
+            flash('Password reset. Please login with your new password.')
+            return redirect(url_for('login'))
+        flash('Incorrect answer. Try again.')
+    return render_template('resetpassword.html', form=form, username=username)
 
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
