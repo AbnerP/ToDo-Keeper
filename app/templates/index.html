@@ -13,6 +13,7 @@
 
       {%- block styles %}
       <!-- Bootstrap -->
+      <link rel="stylesheet" href="{{url_for('.static', filename='index.css')}}">
       <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
       {%- endblock styles %}
 
@@ -40,7 +41,7 @@
               <!--<li><a href="/dashboard/settings">Settings</a></li>-->
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% else %}
-              <li class="active"><a href="/dashboard">Home</a></li>
+              <li><a href="/dashboard">Home</a></li>
               <li><a href="{{ url_for('login') }}">Login</a></li>
               <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
             {% endif %}
