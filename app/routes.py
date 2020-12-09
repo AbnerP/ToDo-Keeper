@@ -72,7 +72,7 @@ def forgotpassword():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
-            if user.security_question_1:
+            if user.security_question_1 != 'default':
                 return redirect(url_for('resetpassword', username=form.username.data))
             flash('No security questions set up for this account. Please contact system administrator for further assistance.')
             user = User.query.filter_by(username=form.username.data).first()
@@ -81,8 +81,17 @@ def forgotpassword():
 @app.route('/resetpassword/<username>', methods=['GET', 'POST'])
 def resetpassword(username):
     form = ResetPasswordForm()
+    user = User.query.filter_by(username=username).first()
+    questions = {}
+    questions['friend'] = 'What is the first name of your best friend in high school?'
+    questions['pet'] = 'What was the name of your first pet?'
+    questions['cook'] = 'What was the first thing you learned to cook?'
+    questions['film'] = 'What was the first film you saw in a theater?'
+    questions['plane'] = 'Where did you go the first time you flew on a plane?'
+    questions['teacher'] = 'What is the last name of your favorite elementary school teacher?'
+    question = questions[user.security_question_1]
+
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
         if form.security_answer_1.data.lower() == user.security_answer_1.lower():
             hashPass = generate_password_hash(form.password.data, method='sha256')
             user.password = hashPass
@@ -90,7 +99,7 @@ def resetpassword(username):
             flash('Password reset. Please login with your new password.')
             return redirect(url_for('login'))
         flash('Incorrect answer. Try again.')
-    return render_template('resetpassword.html', form=form, username=username)
+    return render_template('resetpassword.html', form=form, username=username, question = question)
 
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
