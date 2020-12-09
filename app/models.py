@@ -15,8 +15,8 @@ class User(UserMixin,db.Model): #Add UserMixin to DataBase Model
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     security_question_1 = db.Column(db.String(15))
     security_answer_1 = db.Column(db.String(80))
-    security_question_2 = db.Column(db.String(15))
-    security_answer_2 = db.Column(db.String(80))
+    # security_question_2 = db.Column(db.String(15))
+    # security_answer_2 = db.Column(db.String(80))
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     
     tasks = db.relationship('Task',backref='creatorOfTask',lazy=True) 

@@ -34,17 +34,17 @@ class RegisterForm(FlaskForm):
                                         ('teacher', 'What is the last name of your favorite elementary school teacher?')
                                     ], default='default')
     security_answer_1 = StringField('Answer', validators=[Length(max=80)])
-    security_question_2 = SelectField('Security Question 2 (optional)', 
-                                    choices=[
-                                        ('default','Please select'),
-                                        ('friend', 'What is the first name of your best friend in high school?'),
-                                        ('pet', 'What was the name of your first pet?'),
-                                        ('cook', 'What was the first thing you learned to cook?'),
-                                        ('film', 'What was the first film you saw in a theater?'),
-                                        ('plane', 'Where did you go the first time you flew on a plane?'),
-                                        ('teacher', 'What is the last name of your favorite elementary school teacher?')
-                                    ], default='default')
-    security_answer_2 = StringField('Answer', validators=[Length(max=80)])
+    # security_question_2 = SelectField('Security Question 2 (optional)', 
+    #                                 choices=[
+    #                                     ('default','Please select'),
+    #                                     ('friend', 'What is the first name of your best friend in high school?'),
+    #                                     ('pet', 'What was the name of your first pet?'),
+    #                                     ('cook', 'What was the first thing you learned to cook?'),
+    #                                     ('film', 'What was the first film you saw in a theater?'),
+    #                                     ('plane', 'Where did you go the first time you flew on a plane?'),
+    #                                     ('teacher', 'What is the last name of your favorite elementary school teacher?')
+    #                                 ], default='default')
+    # security_answer_2 = StringField('Answer', validators=[Length(max=80)])
     
     def validate_username(self,username):
         user = User.query.filter_by(username=username.data).first()
@@ -66,19 +66,32 @@ class RegisterForm(FlaskForm):
             if self.security_question_1.data == 'default':
                 raise ValidationError("Please select a security question.")
 
-    def validate_security_question_2(self, security_question_2):
-        if self.security_question_2.data != 'default':
-            if not self.security_answer_2.data:
-                raise ValidationError("Please enter an answer to your question.")
-            if self.security_question_2.data == self.security_question_1.data:
-                raise ValidationError("Please select a question different from your first one.")
+    # def validate_security_question_2(self, security_question_2):
+    #     if self.security_question_2.data != 'default':
+    #         if not self.security_answer_2.data:
+    #             raise ValidationError("Please enter an answer to your question.")
+    #         if self.security_question_2.data == self.security_question_1.data:
+    #             raise ValidationError("Please select a question different from your first one.")
 
-    def validate_security_answer_2(self, security_answer_1):
-        if self.security_answer_2.data:
-            if self.security_question_2.data == 'default':
-                raise ValidationError("Please select a security question.")
-        
+    # def validate_security_answer_2(self, security_answer_1):
+    #     if self.security_answer_2.data:
+    #         if self.security_question_2.data == 'default':
+    #             raise ValidationError("Please select a security question.")
 
+class UsernameForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(),InputRequired(), Length(min=4, max=15)])
+
+    def validate_username(self,username):
+        user = User.query.filter_by(username=username.data).first()
+        if not user:
+            raise ValidationError("An account with that username does not exist.")
+        if user.security_question_1 == 'Please select':
+            raise ValidationError("You have not set up a security question for this account.")
+
+class ResetPasswordForm(FlaskForm):
+    security_answer_1 = StringField('Answer', validators=[Length(max=80)])
+    password = PasswordField('New Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),InputRequired(), Length(min=8, max=80),EqualTo('password')])
     
 class TaskForm(FlaskForm):
     text = StringField('Task', validators=[DataRequired(),InputRequired(), Length(max=150)])
