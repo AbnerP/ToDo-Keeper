@@ -13,13 +13,11 @@ ToDo Keeper
 {% block content %}
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-sm-offset-2 col-md-5 col-md-offset-3 main">
           <article class="media content-section ">
             <div class="media-body border">
-              <ul>
-                <h3>{{ task.text }}</h3>
-                <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
-              </ul>
+              <h3>{{ task.text }}</h3>
+              <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
               <hr>
             </div>
           </article>
@@ -30,7 +28,7 @@ ToDo Keeper
             <!--{{ wtf.form_field(form.date) }}-->
             <br>
             <button class="btn btn-light" type="submit">Update</button>
-        </form>
+          </form>
         </div>
         
       </div>
