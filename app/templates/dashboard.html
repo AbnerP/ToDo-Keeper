@@ -29,7 +29,7 @@ ToDo Keeper
             {{ form.hidden_tag() }}
             {{ wtf.form_field(form.text) }}
             <!--{{ wtf.form_field(form.date) }}-->
-            <button class="btn btn-light" type="submit">Add Task</button>
+            <button class="btn btn-light add" type="submit">Add Task</button>
           </form>
           
           {% for task in tasks %}
@@ -38,7 +38,7 @@ ToDo Keeper
                   <h3><a class="article-title" href="{{url_for('task',task_id=task.id)}}">{{ task.text }}</a><!--&#9;<h4> Due null</h4>--></h3>
                   <p>Created By <a href="/dashboard/profile">{{ task.creatorOfTask.username }}</a> on {{ task.date_posted.strftime('%m/%d/%Y') }}</p>
                   <a class="btn btn-light update" href="task/{{task.id}}/update" >Update</a>
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                  <button type="button" class="btn btn-danger add" data-toggle="modal" data-target="#deleteModal">Delete</button>
                 <hr>
               </div>
             </article>

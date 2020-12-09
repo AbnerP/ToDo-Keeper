@@ -26,12 +26,13 @@ ToDo Keeper - Sign Up
     {{ wtf.form_field(form.security_answer_1) }}
     {{ wtf.form_field(form.security_question_2) }}
     {{ wtf.form_field(form.security_answer_2) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <button class="btn btn-lg btn-primary btn-block sub" type="submit">Sign Up</button>
   </form>
+  <div class='border-top pt-3 col-md-offset-5 col-sm-offset-4''>
+    <span class="text-muted">
+      Already Have A Account? &#9; <a class="lik" href="{{url_for('login')}}">Log In</a>
+    </span>
+  </div>
 </div>
-<div class='border-top pt-3'>
-  <small class="text-muted">
-    Already Have A Account? &#9; <a href="{{url_for('login')}}">Log In</a>
-  </small>
-</div> <!-- /container -->
+ <!-- /container -->
 {% endblock %}

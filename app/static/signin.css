@@ -40,3 +40,12 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.form-signin .sub{
+  background-color: #ff6363;
+  border-color: #eee;
+}
+
+.lik{
+  color: #ff6363;
+}

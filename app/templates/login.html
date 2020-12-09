@@ -20,11 +20,11 @@ ToDo Keeper - Login
     {{ wtf.form_field(form.username) }}
     {{ wtf.form_field(form.password) }}
     {{ wtf.form_field(form.remember) }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <button class="btn btn-lg btn-primary btn-block sub" type="submit">Sign in</button>
   </form>
-  <div class='border-top pt-3 col-md-offset-5'>
+  <div class='border-top pt-3 col-md-offset-5 col-sm-offset-4'>
     <span class="text-muted">
-      Need an account?&#9;<a href="{{url_for('signup')}}">Sign Up Now</a>
+      Need an account?&#9;<a class="lik" href="{{url_for('signup')}}">Sign Up Now</a>
     </span>
   </div>
 </div>
