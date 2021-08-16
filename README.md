@@ -4,6 +4,29 @@ ToDo Keeper is a web based To Do List app which aims to make any everyday To Do 
 
 *Project for CSC-210 Web Development class at University of Rochester*
 
+# Main Technologies Used
+
+Python and Flask
+
+HTML & Jinja_2 Templates
+
+CSS & Bootstrap
+
+SQLite (SQLAlchemy)
+
+# Functionality
+1. **Log In and Sign Up**
+
+    Users are able to log in and out after creating an account.
+
+2. **Users can modify profile**
+
+    a. Profile picture (.jpg or .png)
+
+    b. Email and Username (Based on availability)
+
+3. **Create, Modify and Delete Tasks**
+
 # Run the project
 
 1. **Creating the virtual environment**
@@ -28,26 +51,3 @@ ToDo Keeper is a web based To Do List app which aims to make any everyday To Do 
 Register for an account and start adding tasks!
 
 
-# Functionality
-1. **Log In and Sign Up**
-
-    Users are able to log in and out after creating an account.
-
-2. **Users can modify profile**
-
-    a. Profile picture (.jpg or .png)
-
-    b. Email and Username (Based on availability)
-
-3. **Create, Modify and Delete Tasks**
-
-
-# Main Technologies Used
-
-Python and Flask
-
-HTML & Jinja_2 Templates
-
-CSS & Bootstrap
-
-SQLite (SQLAlchemy)
