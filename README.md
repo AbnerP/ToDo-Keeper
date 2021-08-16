@@ -8,20 +8,20 @@ ToDo Keeper is a web based To Do List app which aims to make any everyday To Do 
 
 1. **Creating the virtual environment**
 
-`python3 -m venv venv`
+    `python3 -m venv venv`
 
 2. **Activating virtual environment**
 
-(MAC) `source venv/bin/activate`
-(WINDOWS) `venv\Scripts\activate`
+    (MAC) `source venv/bin/activate`
+    (WINDOWS) `venv\Scripts\activate`
 
 3. **Installing App Requirements**
 
-`pip install -r requirements.txt`
+    `pip install -r requirements.txt`
 
 4. **Run the app**
 
-`flask run`
+    `flask run`
 
 5. **Create and account**
 
@@ -35,9 +35,9 @@ Users are able to log in and out after creating an account.
 
 2. **Users can modify profile**
 
-  a. Profile picture (.jpg or .png)
+    a. Profile picture (.jpg or .png)
 
-  b. Email and Username (Based on availability)
+    b. Email and Username (Based on availability)
 
 3. **Create, Modify and Delete Tasks**
 
