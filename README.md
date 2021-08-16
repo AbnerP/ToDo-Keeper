@@ -31,7 +31,7 @@ Register for an account and start adding tasks!
 # Functionality
 1. **Log In and Sign Up**
 
-Users are able to log in and out after creating an account.
+    Users are able to log in and out after creating an account.
 
 2. **Users can modify profile**
 
