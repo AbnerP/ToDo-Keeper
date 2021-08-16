@@ -48,6 +48,6 @@ SQLite (SQLAlchemy)
 
 5. **Create and account**
 
-Register for an account and start adding tasks!
+    Register for an account and start adding tasks!
 
 
